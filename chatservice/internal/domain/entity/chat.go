@@ -38,7 +38,7 @@ func NewChat(name string, userId string, initialSystemMessage *Message, config *
 
 	chat.addMessage(initialSystemMessage)
 
-	if err := chat.validate(); err != nil {
+	if err := chat.Validate(); err != nil {
 		return nil, err
 	}
 
@@ -83,7 +83,7 @@ func (c *Chat) RefreshTokenUsage() {
 	}
 }
 
-func (c *Chat) validate() error {
+func (c *Chat) Validate() error {
 	if c.UserId == "" {
 		return errors.New("user id is required")
 	}
@@ -95,6 +95,9 @@ func (c *Chat) validate() error {
 	}
 	if c.Config.AIModel == nil {
 		return errors.New("ai model is required")
+	}
+	if c.Status != "active" && c.Status != "ended" {
+		return errors.New("invalid status")
 	}
 	return nil
 }
