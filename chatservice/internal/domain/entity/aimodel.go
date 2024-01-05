@@ -15,3 +15,7 @@ func NewAIModel(name string, maxTokens int) *AIModel {
 func (m *AIModel) GetMaxTokens() int {
 	return m.MaxTokens
 }
+
+func (m *AIModel) getModelName() string {
+	return m.Name
+}

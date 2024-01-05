@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	tiktoken_go "github.com/j178/tiktoken-go"
 )
 
 type Message struct {
@@ -17,12 +18,14 @@ type Message struct {
 }
 
 func NewMessage(role string, content string, model *AIModel) (*Message, error) {
+	totaltokens := tiktoken_go.CountTokens(model.getModelName(), content)
 	msg := &Message{
 		ID:        uuid.New().String(),
 		Role:      role,
 		Content:   content,
 		Model:     model,
 		CreatedAt: time.Now(),
+		Tokens:    totaltokens,
 	}
 
 	err := msg.Validate()
