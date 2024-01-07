@@ -99,5 +99,9 @@ func (c *Chat) Validate() error {
 	if c.Status != "active" && c.Status != "ended" {
 		return errors.New("invalid status")
 	}
+	if condition := c.Config.Temperature < 0 || c.Config.Temperature > 2; condition {
+		return errors.New("invalid temperature")
+		
+	}
 	return nil
 }
