@@ -1,6 +1,10 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+)
 
 type ChatConfig struct {
 	AIModel          *AIModel
@@ -25,9 +29,9 @@ type Chat struct {
 	Config               *ChatConfig
 }
 
-func NewChat(name string, userId string, initialSystemMessage *Message, config *ChatConfig) (*Chat, error) {
+func NewChat(userId string, initialSystemMessage *Message, config *ChatConfig) (*Chat, error) {
 	chat := &Chat{
-		Name:                 name,
+		ChatId:               uuid.New().String(),
 		UserId:               userId,
 		InitialSystemMessage: initialSystemMessage,
 		Messages:             []*Message{},
