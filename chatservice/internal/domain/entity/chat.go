@@ -14,6 +14,7 @@ type ChatConfig struct {
 }
 
 type Chat struct {
+	ChatId               string
 	Name                 string
 	UserId               string
 	InitialSystemMessage *Message
@@ -36,7 +37,7 @@ func NewChat(name string, userId string, initialSystemMessage *Message, config *
 		Config:               config,
 	}
 
-	chat.addMessage(initialSystemMessage)
+	chat.AddMessage(initialSystemMessage)
 
 	if err := chat.Validate(); err != nil {
 		return nil, err
@@ -46,7 +47,7 @@ func NewChat(name string, userId string, initialSystemMessage *Message, config *
 
 }
 
-func (c *Chat) addMessage(m *Message) error {
+func (c *Chat) AddMessage(m *Message) error {
 	if c.Status == "ended" {
 
 		return errors.New("chat is ended")
@@ -101,7 +102,7 @@ func (c *Chat) Validate() error {
 	}
 	if condition := c.Config.Temperature < 0 || c.Config.Temperature > 2; condition {
 		return errors.New("invalid temperature")
-		
+
 	}
 	return nil
 }
